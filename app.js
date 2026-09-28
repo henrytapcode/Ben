@@ -26,7 +26,7 @@ const CFG = {
 
 const Cache = (() => {
   const mem = new Map();
-  const LS_KEY = 'lumi_cache_v4';
+  const LS_KEY = 'lumi_cache_v5';
 
   try {
     const saved = JSON.parse(localStorage.getItem(LS_KEY) || '{}');
@@ -1611,29 +1611,26 @@ qs('#signupFormEl').addEventListener('submit', e => {
 const TopMenu = (() => {
   const GENRES = [
     { v: 'hanh-dong', l: 'Hành Động' }, { v: 'tinh-cam', l: 'Tình Cảm' },
-    { v: 'hai-huoc', l: 'Hài Hước' }, { v: 'tam-ly', l: 'Tâm Lý' },
+    { v: 'phim-hai', l: 'Hài' }, { v: 'tam-ly', l: 'Tâm Lý' },
     { v: 'hoat-hinh', l: 'Hoạt Hình' }, { v: 'kinh-di', l: 'Kinh Dị' },
-    { v: 'vien-tuong', l: 'Viễn Tưởng' }, { v: 'phieu-luu', l: 'Phiêu Lưu' },
+    { v: 'khoa-hoc-vien-tuong', l: 'Khoa Học Viễn Tưởng' }, { v: 'phieu-luu', l: 'Phiêu Lưu' },
     { v: 'co-trang', l: 'Cổ Trang' }, { v: 'chien-tranh', l: 'Chiến Tranh' },
-    { v: 'vo-thuat', l: 'Võ Thuật' }, { v: 'bi-an', l: 'Bí Ẩn' },
-    { v: 'gia-dinh', l: 'Gia Đình' }, { v: 'am-nhac', l: 'Âm Nhạc' },
-    { v: 'the-thao', l: 'Thể Thao' }, { v: 'hoc-duong', l: 'Học Đường' },
-    { v: 'tai-lieu', l: 'Tài Liệu' }, { v: 'than-thoai', l: 'Thần Thoại' },
-    { v: 'chinh-kich', l: 'Chính Kịch' }, { v: 'kinh-dien', l: 'Kinh Điển' },
-    { v: 'gay-can', l: 'Gay Cấn' }, { v: 'phim-18', l: 'Phim 18+' }
+    { v: 'hinh-su', l: 'Hình Sự' }, { v: 'bi-an', l: 'Bí Ẩn' },
+    { v: 'gia-dinh', l: 'Gia Đình' }, { v: 'phim-nhac', l: 'Nhạc' },
+    { v: 'lich-su', l: 'Lịch Sử' }, { v: 'lang-man', l: 'Lãng Mạn' },
+    { v: 'tai-lieu', l: 'Tài Liệu' }, { v: 'gia-tuong', l: 'Giả Tưởng' },
+    { v: 'chinh-kich', l: 'Chính Kịch' }, { v: 'mien-tay', l: 'Miền Tây' },
+    { v: 'gay-can', l: 'Gây Cấn' }, { v: 'phim-18', l: 'Phim 18+' }
   ];
   const COUNTRIES = [
-    { v: 'my', l: 'Mỹ' }, { v: 'han-quoc', l: 'Hàn Quốc' },
+    { v: 'au-my', l: 'Âu Mỹ' }, { v: 'han-quoc', l: 'Hàn Quốc' },
     { v: 'trung-quoc', l: 'Trung Quốc' }, { v: 'viet-nam', l: 'Việt Nam' },
     { v: 'nhat-ban', l: 'Nhật Bản' }, { v: 'thai-lan', l: 'Thái Lan' },
     { v: 'anh', l: 'Anh' }, { v: 'phap', l: 'Pháp' },
     { v: 'an-do', l: 'Ấn Độ' }, { v: 'hong-kong', l: 'Hồng Kông' },
-    { v: 'dai-loan', l: 'Đài Loan' }, { v: 'uc', l: 'Úc' },
-    { v: 'canada', l: 'Canada' }, { v: 'duc', l: 'Đức' },
-    { v: 'tay-ban-nha', l: 'Tây Ban Nha' }, { v: 'tho-nhi-ky', l: 'Thổ Nhĩ Kỳ' },
-    { v: 'indonesia', l: 'Indonesia' }, { v: 'nga', l: 'Nga' },
-    { v: 'ha-lan', l: 'Hà Lan' }, { v: 'y', l: 'Ý' },
-    { v: 'philippines', l: 'Philippines' }, { v: 'singapore', l: 'Singapore' }
+    { v: 'dai-loan', l: 'Đài Loan' }, { v: 'indonesia', l: 'Indonesia' },
+    { v: 'nga', l: 'Nga' }, { v: 'ha-lan', l: 'Hà Lan' },
+    { v: 'philippines', l: 'Philippines' }, { v: 'quoc-gia-khac', l: 'Quốc Gia Khác' }
   ];
 
   function renderOptions(containerId, options, kind) {
@@ -1714,7 +1711,10 @@ document.addEventListener('DOMContentLoaded', () => {
   qs('#hamburger').addEventListener('click', () => qs('#mobileNav').classList.toggle('open'));
 
   // Back buttons
-  qs('#backBtn').addEventListener('click', () => history.back() || Router.go('home'));
+  qs('#backBtn').addEventListener('click', () => {
+    if (history.length > 1) history.back();
+    else Router.go('home');
+  });
   qs('#backFromWatch').addEventListener('click', () => {
     const m = Watch.state().movie;
     if (m) Router.go('detail', { slug: m.slug });
